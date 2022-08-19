@@ -32,13 +32,12 @@ app.get("/",function(req,res){
         //res.send(); esto sirve para crear directamente html
     }
 
-    res.render("list.ejs", { kindOfDay:day,  newListItems: items});
+    res.render("list.ejs", { kindOfDay:day,  newListItem: items});
 });
 
 app.post("/",function(req,res){
     var item=req.body.newItem;
     items.push(item);
-    
     res.redirect("/");
     // res.render("list.ejs",{kindOfDay:day, newListItem: item})
 });

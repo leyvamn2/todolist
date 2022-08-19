@@ -38,7 +38,7 @@ app.get("/",function(req,res){
 app.post("/",function(req,res){
     var item=req.body.newItem;
     items.push(item);
-    
+    items.len
     res.redirect("/");
     // res.render("list.ejs",{kindOfDay:day, newListItem: item})
 });

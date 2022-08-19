@@ -5,10 +5,9 @@ const bodyParser= require("body-parser");
 
 
 const app= express();
-var items=[];
+var days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 
 app.set("view engine","ejs");
-app.use(bodyParser.urlencoded({ extended: false }));
 app.get("/",function(req,res){
     
     var today=new Date();
@@ -19,7 +18,7 @@ app.get("/",function(req,res){
     };
     var currentDay=today.getDay();
     
-    var day=today.toLocaleDateString("en-US",options);
+    var day=today.toLocaleDateString("en-US");
     if(currentDay===6 || currentDay===0){
         //res.render('index'); sirve para eviar un archivo html
         
@@ -32,17 +31,9 @@ app.get("/",function(req,res){
         //res.send(); esto sirve para crear directamente html
     }
 
-    res.render("list.ejs", { kindOfDay:day,  newListItems: items});
+    day=days[currentDay];
+   res.render("list.ejs", { kindOfDay:day});
 });
-
-app.post("/",function(req,res){
-    var item=req.body.newItem;
-    items.push(item);
-    
-    res.redirect("/");
-    // res.render("list.ejs",{kindOfDay:day, newListItem: item})
-});
-
 
 app.listen(3001,function(){
     console.log("Server on port 3000");
