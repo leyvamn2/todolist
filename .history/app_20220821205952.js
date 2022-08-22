@@ -5,7 +5,7 @@ const bodyParser= require("body-parser");
 
 
 const app= express();
-let items=["Study"];
+let items=[];
 
 app.set("view engine","ejs");
 

@@ -5,13 +5,11 @@ const bodyParser= require("body-parser");
 
 
 const app= express();
-let items=["Study"];
+let items=[];
 
 app.set("view engine","ejs");
 
-//location css files
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
 app.get("/",function(req,res){
     
     let today=new Date();

@@ -5,24 +5,21 @@ const bodyParser= require("body-parser");
 
 
 const app= express();
-let items=["Study"];
+let items=[];
 
 app.set("view engine","ejs");
-
-//location css files
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
 app.get("/",function(req,res){
     
-    let today=new Date();
-    let options={
+    var today=new Date();
+    var options={
         weekday:"long",
         day:"numeric",
         month: "long"
     };
-    let currentDay=today.getDay();
+    var currentDay=today.getDay();
     
-    let day=today.toLocaleDateString("en-US",options);
+    var day=today.toLocaleDateString("en-US",options);
     if(currentDay===6 || currentDay===0){
         //res.render('index'); sirve para eviar un archivo html
         
@@ -39,7 +36,7 @@ app.get("/",function(req,res){
 });
 
 app.post("/",function(req,res){
-    let item=req.body.newItem;
+    var item=req.body.newItem;
     items.push(item);
     
     res.redirect("/");
