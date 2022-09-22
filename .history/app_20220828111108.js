@@ -69,68 +69,38 @@ app.get("/",function(req,res){
                 res.redirect("/");
         }
         else{
-            res.render("list.ejs", { listTitle:"TO DO List",  newListItems: foundItems});
+            res.render("list.ejs", { kindOfDay:day,  newListItems: foundItems});
 
         }
      });
 });
 
 app.get("/:customListName",function(req,res){
-    const customListName= (req.params.customListName);
-    List.findOne({name:customListName},function(err,foundList){
-        if(!err){
-            if(!foundList){
-                console.log("doesn't exist");
-                const list= new List({
-                    name:customListName,
-                    items: defaultItems
-                     });
-                list.save();
-                res.redirect("/"+customListName)
-    
-            }
-            else{
-                console.log("exist");
-                res.render("list.ejs",{ listTitle:foundList.name  ,newListItems: foundList.items})
-            }
-    
-        }
+    const listName=(req.params.customListName); 
+    const list= new List({
+        name:customListName,
+        items: defaultItems
     });
-    //  
+    list.save();
+
 });
 
 app.post("/",function(req,res){
     //obtener elemento del input del ejs
     const itemName=req.body.newItem;
-    const listName=req.body.list//crear modelo
+    //crear modelo
     const item = new Item({
         name:itemName,
     });
-    
-    if(listName==="TO DO List"){
-        
-        //guardar elemento creado
-        item.save();
-        res.redirect("/");
-    }
-    else{
-        console.log("o.o");
-       
-        List.findOne({name:listName},function(err,foundList){
-
-            foundList.items.push(item);
-            foundList.save();
-            res.redirect("/"+listName);
-        });
-    }
-    
+    //guardar elemento creado
+    item.save();
+    res.redirect("/");
  
 });
 
 app.post("/delete",function(req,res){
     //const itemName=req.body.newItem;
     const selectedItem=req.body.checkbox;
-    const listName=req.body.list;
     //console.log(req.body.checkbox);
     Item.findByIdAndRemove(selectedItem,function(err){
         if(err){

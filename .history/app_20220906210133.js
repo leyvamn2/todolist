@@ -69,7 +69,7 @@ app.get("/",function(req,res){
                 res.redirect("/");
         }
         else{
-            res.render("list.ejs", { listTitle:"TO DO List",  newListItems: foundItems});
+            res.render("list.ejs", { listTitle:day,  newListItems: foundItems});
 
         }
      });
@@ -106,31 +106,15 @@ app.post("/",function(req,res){
     const item = new Item({
         name:itemName,
     });
-    
-    if(listName==="TO DO List"){
-        
-        //guardar elemento creado
-        item.save();
-        res.redirect("/");
-    }
-    else{
-        console.log("o.o");
-       
-        List.findOne({name:listName},function(err,foundList){
-
-            foundList.items.push(item);
-            foundList.save();
-            res.redirect("/"+listName);
-        });
-    }
-    
+    //guardar elemento creado
+    item.save();
+    res.redirect("/"+listName);
  
 });
 
 app.post("/delete",function(req,res){
     //const itemName=req.body.newItem;
     const selectedItem=req.body.checkbox;
-    const listName=req.body.list;
     //console.log(req.body.checkbox);
     Item.findByIdAndRemove(selectedItem,function(err){
         if(err){

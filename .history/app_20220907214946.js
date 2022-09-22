@@ -106,7 +106,6 @@ app.post("/",function(req,res){
     const item = new Item({
         name:itemName,
     });
-    
     if(listName==="TO DO List"){
         
         //guardar elemento creado
@@ -117,11 +116,11 @@ app.post("/",function(req,res){
         console.log("o.o");
        
         List.findOne({name:listName},function(err,foundList){
-
             foundList.items.push(item);
             foundList.save();
-            res.redirect("/"+listName);
         });
+        foundList.save();
+        res.redirect("/"+listName)
     }
     
  

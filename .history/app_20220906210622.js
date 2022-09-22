@@ -103,34 +103,24 @@ app.post("/",function(req,res){
     //obtener elemento del input del ejs
     const itemName=req.body.newItem;
     const listName=req.body.list//crear modelo
-    const item = new Item({
-        name:itemName,
-    });
-    
-    if(listName==="TO DO List"){
-        
+    if(listName==="TODO List"){
+        const item = new Item({
+            name:itemName,
+        });
         //guardar elemento creado
         item.save();
-        res.redirect("/");
     }
     else{
         console.log("o.o");
-       
-        List.findOne({name:listName},function(err,foundList){
-
-            foundList.items.push(item);
-            foundList.save();
-            res.redirect("/"+listName);
-        });
     }
-    
+    res.redirect("/");
+    console.log(listName);
  
 });
 
 app.post("/delete",function(req,res){
     //const itemName=req.body.newItem;
     const selectedItem=req.body.checkbox;
-    const listName=req.body.list;
     //console.log(req.body.checkbox);
     Item.findByIdAndRemove(selectedItem,function(err){
         if(err){
